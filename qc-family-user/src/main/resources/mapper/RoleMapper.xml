@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qcstudio.qcfamilyuser.mapper.RoleMapper">
+    <select id="selectRolesByUserId" parameterType="int" resultType="com.qcstudio.qcfamilyuser.entity.Role">
+        select
+            tu.*,tr.id as rid,tr.name,tr.remark,tr.type
+        from
+            tb_role tr
+        left outer join
+            tb_user_role tur
+        on
+            tr.id = tur.t_role_id
+        left outer join
+            tb_user tu
+        on
+            tur.t_user_id = tu.id;
+    </select>
+
+    <select id="selectRolesByPermissionId" parameterType="int" resultType="com.qcstudio.qcfamilyuser.entity.Role">
+        select
+            tp.id,tp.t_name as pname,tp.t_permission as permission,tr.id as rid,tr.name,tr.remark,tr.type
+        from
+            tb_role tr
+                left outer join
+            tb_role_permission trp
+            on
+                tr.id = trp.t_role_id
+                left outer join
+            tb_permission tp
+            on
+                trp.t_permission_id = tp.id;
+    </select>
+</mapper>
